@@ -3,13 +3,15 @@ import p5 from 'p5'
 import { watch } from 'vue'
 
 const props = defineProps<{
+  id: string
   sketchFn: (p: p5) => void
 }>()
+
 watch(
   () => props.sketchFn,
   () => {
     requestAnimationFrame(() => {
-      const sketchElement = document.getElementById('sketch')
+      const sketchElement = document.getElementById(props.id)
       if (sketchElement) {
         while (sketchElement.firstChild) {
           sketchElement.removeChild(sketchElement.firstChild)
@@ -24,16 +26,5 @@ watch(
 )
 </script>
 <template>
-  <div id="sketch"></div>
+  <div :id="id"></div>
 </template>
-<style scoped>
-#vue-canvas {
-  display: block;
-  margin: 0 auto;
-  padding: 0;
-  width: 500px;
-  height: 500px;
-  border-radius: 20px;
-  overflow: hidden;
-}
-</style>
